@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>💖 Valentine?</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(135deg, #ffb6c1, #ffc0cb);
+      font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 40px 50px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+      z-index: 2;
+    }
+
+    h1 {
+      color: #e75480;
+      margin-bottom: 30px;
+    }
+
+    button {
+      padding: 12px 30px;
+      font-size: 18px;
+      border-radius: 30px;
+      border: none;
+      cursor: pointer;
+      margin: 10px;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    button:hover {
+      transform: scale(1.1);
+    }
+
+    .yes {
+      background: #ff69b4;
+      color: white;
+    }
+
+    .no {
+      background: #ddd;
+      color: #555;
+      position: relative;
+    }
+
+    /* Floating hearts */
+    .heart {
+      position: absolute;
+      bottom: -20px;
+      font-size: 20px;
+      color: rgba(255, 105, 180, 0.8);
+      animation: floatUp linear infinite;
+    }
+
+    @keyframes floatUp {
+      from {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(-110vh) scale(1.5);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <h1 id="question">Do I love you?</h1>
+    <div id="buttons">
+      <button class="yes" onclick="next()">YES</button>
+    </div>
+  </div>
+
+  <script>
+    const questions = [
+      "Do I love you?",
+      "Do you love me?",
+      "Will you be my Valentine? 💘"
+    ];
+
+    let step = 0;
+
+    function next() {
+      step++;
+
+      if (step < 2) {
+        document.getElementById("question").innerText = questions[step];
+      } else {
+        document.getElementById("question").innerText = questions[step];
+        document.getElementById("buttons").innerHTML = `
+          <button class="yes" onclick="yesAnswer()">YES 💖</button>
+          <button class="no" id="noBtn">NO 😢</button>
+        `;
+        const noBtn = document.getElementById("noBtn");
+        noBtn.addEventListener("mouseover", moveNo);
+      }
+    }
+
+    function yesAnswer() {
+      document.getElementById("question").innerText =
+        "YAY!!! 💕💍💖";
+      document.getElementById("buttons").innerHTML =
+        "<h2>I love you forever ❤️</h2>";
+    }
+
+    function moveNo() {
+      const btn = document.getElementById("noBtn");
+      const x = Math.random() * 200 - 100;
+      const y = Math.random() * 200 - 100;
+      btn.style.transform = `translate(${x}px, ${y}px)`;
+    }
+
+    // Create floating hearts
+    setInterval(() => {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerText = "❤️";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = Math.random() * 3 + 3 + "s";
+      document.body.appendChild(heart);
+
+      setTimeout(() => heart.remove(), 6000);
+    }, 300);
+  </script>
+
+</body>
+</html>
